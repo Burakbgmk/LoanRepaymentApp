@@ -10,7 +10,7 @@ function Result(props) {
                 <p>Total BSMV Tax: {props.totalBSMV}</p> 
                 <p>Total KKDF Tax: {props.totalKKDF}</p> 
             </div>
-            <button className="open-table-btn" onClick={() => console.log("repayment table is opening")}>Show Repayment Table</button>
+            
         </div>
     )
 }
