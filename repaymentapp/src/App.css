@@ -1,1 +1,24 @@
+main
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Sans',sans-serif;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.static-container{
+    display: flex;
+}
+
+.input-container{
+    display: flex;
+    justify-content: flex-end;
+}
 

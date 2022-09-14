@@ -14,11 +14,50 @@ function App() {
   const prevRemainingOriginal = useRef();
   const [installments, setInstallments] = useState([]);
   const [displayTable, setDisplayTable] = useState(false);
+  const [displayResult, setDisplayResult] = useState(false);
 
-  
+  const inputButton = useRef(null);
+
+  const Round = (n) => {
+    return (Math.round((n + Number.EPSILON) * 100) / 100)+"";
+  }
 
   useEffect(() => {
     if(inputs.length === 0) return;
+
+    const inputValidator = () => {
+      if(inputs.loanAmount === 0 || inputs.loanAmount === "" || inputs.loanAmount === "0"){
+        alert("loan amount cannot be zero!");
+        setDisplayResult(false);
+        return;
+      }
+      else if(inputs.numberOfInstallments === 0 || inputs.numberOfInstallments === "" || inputs.numberOfInstallments === "0"){
+        alert("installment number cannot be zero!");
+        setDisplayResult(false);
+        return;
+      }
+      else if(inputs.interval === 0 || inputs.interval === "" || inputs.interval === "0"){
+        alert("interval should be checked!");
+        setDisplayResult(false);
+        return;
+      }
+      else if(inputs.profitRateInterval === 0){
+        alert("profit interval should be checked!");
+        setDisplayResult(false);
+        return;
+      }
+      else if(inputs.calculationType === 0){
+        alert("calculation type should be checked!");
+        setDisplayResult(false);
+        return;
+      }
+      else setDisplayResult(true);
+    }
+    inputValidator();
+    
+
+
+
     const interestRate = () => {
       if(inputs.calculationType === 1)
       {
@@ -37,10 +76,10 @@ function App() {
     let kkdf = Number(inputs.kkdfTaxRate);
     var installmentAmount = P*((i*(i+1)**n)/(((i+1)**n)-1));
     let totalPayment = installmentAmount*12;
-    setInstallmentPerInterval(installmentAmount);
-    setTotalRepay(totalPayment);
-    setTotalBSMV((totalPayment-P)*bsmv/i);
-    setTotalKKDF((totalPayment-P)*kkdf/i);
+    setInstallmentPerInterval(Round(installmentAmount));
+    setTotalRepay(Round(totalPayment));
+    setTotalBSMV(Round((totalPayment-P)*bsmv/i));
+    setTotalKKDF(Round((totalPayment-P)*kkdf/i));
 
     const calculateInstallments = (count) => {
       var installmentsArray = new Array(count);
@@ -49,12 +88,12 @@ function App() {
         let prevRemaining = inputs.loanAmount;
         if(i>0) prevRemaining = prevRemainingOriginal.current;
         let idx = i+1;
-        let amount = installmentAmount;
-        let profitAmount =  prevRemaining * interestRate();
-        let kkdf = prevRemaining * Number(inputs.kkdfTaxRate);
-        let bsmv = prevRemaining * Number(inputs.bsmvTaxRate);
-        let original = amount - profitAmount - kkdf - bsmv;
-        let remainingOriginal = prevRemaining-original
+        let amount = Round(installmentAmount);
+        let profitAmount =  Round(prevRemaining * interestRate());
+        let kkdf = Round(prevRemaining * Number(inputs.kkdfTaxRate));
+        let bsmv = Round(prevRemaining * Number(inputs.bsmvTaxRate));
+        let original = Round(amount - profitAmount - kkdf - bsmv);
+        let remainingOriginal = Round(prevRemaining-original);
         prevRemainingOriginal.current =remainingOriginal;
         let installment = {idx, amount ,original, remainingOriginal, profitAmount, kkdf, bsmv};
         installmentsArray.push(installment);
@@ -68,7 +107,9 @@ function App() {
   },[inputs])
 
   const updateInputs = (inputParams) => {
-    if(inputs.values !== inputParams.values) setDisplayTable(false);
+     if(!(Object.keys(inputs).every(
+          key => inputParams.hasOwnProperty(key)
+              && inputParams[key] === inputs[key]))) setDisplayTable(false);
     setInputs(inputParams);
   }
 
@@ -77,24 +118,37 @@ function App() {
   return (
     <main>
       <div>
-        <UserInput updateInputParams={updateInputs}/>
-        {
-          (inputs.length !== 0) && (<div>
+        <div className='static-container'>
+          <div className='input-container'>
+            <UserInput 
+            updateInputParams={updateInputs}
+
+            /> 
+          </div>
+          <div className='result-container'>
           <Result 
           totalRepay = {totalRepay}
           installmentPerInterval = {installmentPerInterval}
           totalBSMV = {totalBSMV}
           totalKKDF = {totalKKDF}
+          trigger = {displayResult}
           />
-          <button className="open-table-btn" onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>
-          </div>)
-        }
-        {
-          (displayTable) && (<RepaymentTable
-            installments = {installments}
-          />)
-        }
-        
+          {
+          (displayResult) && (<button 
+          className="open-table-btn" 
+          onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
+          }
+          </div>
+        </div>
+        <div className='pop-up-container'>
+          {
+            <RepaymentTable
+              installments = {installments}
+              trigger = {displayTable}
+              setTrigger = {setDisplayTable}
+            />
+          }
+        </div>
       </div>
       
       
