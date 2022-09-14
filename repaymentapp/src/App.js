@@ -113,6 +113,11 @@ function App() {
     setInputs(inputParams);
   }
 
+  const calculateButtonClicked = () => {
+    inputButton.current.callInputs();
+    inputButton.current.shakeInput();
+  }
+
   
 
   return (
@@ -122,8 +127,11 @@ function App() {
           <div className='input-container'>
             <UserInput 
             updateInputParams={updateInputs}
-
+            ref={inputButton}
             /> 
+          </div>
+          <div className='calculatebtn-container'>
+            <button onClick={calculateButtonClicked}>Calculate</button>
           </div>
           <div className='result-container'>
           <Result 

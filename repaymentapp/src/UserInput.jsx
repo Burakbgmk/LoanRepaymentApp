@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useImperativeHandle } from "react";
+import { useState, useRef, forwardRef } from "react";
 
-function UserInput(props) {
+function UserInput(props, ref) {
     const [loanAmount,setLoanAmount] = useState(0);
     const [numberOfInstallments,setNumberOfInstallments] = useState(0);
     const [interval, setInterval] = useState(0);
@@ -9,6 +10,16 @@ function UserInput(props) {
     const [bsmvTaxRate,setBsmvTaxRate] = useState(0);
     const [kkdfTaxRate,setKkdfTaxRate] = useState(0);
     const [calculationType, setCalculationType] = useState(0);
+
+    const inputRef = useRef();
+    useImperativeHandle(ref, () => ({
+        callInputs: () => {
+            calculateButtonPressed();
+        },
+        shakeInput: () => {
+            inputRef.current.focus();
+        }
+    }));
 
     const calculateButtonPressed = () => {
         props.updateInputParams({
@@ -32,7 +43,8 @@ function UserInput(props) {
                         <input 
                         id="loan-field"
                         type="number"
-                        onChange={(e) => setLoanAmount(e.target.value)} />
+                        onChange={(e) => setLoanAmount(e.target.value)}
+                        ref={inputRef} />
                     </div>
                     <div className="col">
                         <label htmlFor="ins-number-field">Number of installments</label>
@@ -77,13 +89,9 @@ function UserInput(props) {
                     </div>
                 </div>
             </div>
-            <div className="row">
-               <div className="calc-btn-container">
-            </div>
-                <button onClick={calculateButtonPressed}>Calculate</button>
-            </div>
+            
         </div>
     );
 }
 
-export default UserInput;
+export default forwardRef(UserInput);
