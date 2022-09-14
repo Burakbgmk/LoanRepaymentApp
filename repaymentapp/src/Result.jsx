@@ -1,14 +1,14 @@
 
 function Result(props) {
     
-    const showResult = (totalRepay,installmentPerInterval,totalBSMV,totalKKDF) => {
+    const showResult = (results) => {
         return(
             <div>
                 <div className="result-container">
-                    <p>Total Repay: {totalRepay}</p> 
-                    <p>Installment Amount: {installmentPerInterval}</p> 
-                    <p>Total BSMV Tax: {totalBSMV}</p> 
-                    <p>Total KKDF Tax: {totalKKDF}</p> 
+                    <p>Total Repay: {results.totalRepay}</p> 
+                    <p>Installment Amount: {results.installmentPerInterval}</p> 
+                    <p>Total BSMV Tax: {results.totalBSMV}</p> 
+                    <p>Total KKDF Tax: {results.totalKKDF}</p> 
                 </div>
             </div>
         )
@@ -16,7 +16,7 @@ function Result(props) {
 
 
     return (
-        (props.trigger) ? showResult(props.totalRepay,props.installmentPerInterval,props.totalBSMV,props.totalKKDF) : showResult("","","","")
+        (props.trigger) ? showResult(props.results) : showResult("","","","")
     )
 }
 
