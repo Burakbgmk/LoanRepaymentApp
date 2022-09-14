@@ -3,6 +3,7 @@ import './App.css';
 import Result from './Result';
 import UserInput from './UserInput';
 import RepaymentTable from './RepaymentTable';
+import {calculateResult, calculateInstallments} from './Calculations.js';
 
 
 function App() {
@@ -11,16 +12,11 @@ function App() {
   const [installmentPerInterval, setInstallmentPerInterval] = useState(0);
   const [totalBSMV, setTotalBSMV] = useState(0);
   const [totalKKDF, setTotalKKDF] = useState(0);
-  const prevRemainingOriginal = useRef();
   const [installments, setInstallments] = useState([]);
   const [displayTable, setDisplayTable] = useState(false);
   const [displayResult, setDisplayResult] = useState(false);
 
   const inputButton = useRef(null);
-
-  const Round = (n) => {
-    return (Math.round((n + Number.EPSILON) * 100) / 100)+"";
-  }
 
   useEffect(() => {
     if(inputs.length === 0) return;
@@ -54,55 +50,34 @@ function App() {
       else setDisplayResult(true);
     }
     inputValidator();
-    
 
+    let results = calculateResult(
+      inputs.calculationType,
+      inputs.profitRate,
+      inputs.profitRateInterval,
+      inputs.interval,
+      inputs.loanAmount,
+      inputs.numberOfInstallments,
+      inputs.bsmvTaxRate,
+      inputs.kkdfTaxRate
+      )
 
+    setTotalRepay(results.totalRepay);
+    setInstallmentPerInterval(results.installmentPerInterval);
+    setTotalBSMV(results.totalBSMV);
+    setTotalKKDF(results.totalKKDF);
 
-    const interestRate = () => {
-      if(inputs.calculationType === 1)
-      {
-        let annualRate = Number(inputs.profitRate) * Number(inputs.profitRateInterval);
-        return annualRate/Number(inputs.interval);
-      }
-      else
-      {
-        return ((1+Number(inputs.profitRate))**(Number(inputs.profitRateInterval)/Number(inputs.interval)))-1
-      }
-    }
-    let i = interestRate() + Number(inputs.bsmvTaxRate) + Number(inputs.kkdfTaxRate);
-    let P = Number(inputs.loanAmount);
-    let n = Number(inputs.numberOfInstallments);
-    let bsmv = Number(inputs.bsmvTaxRate);
-    let kkdf = Number(inputs.kkdfTaxRate);
-    var installmentAmount = P*((i*(i+1)**n)/(((i+1)**n)-1));
-    let totalPayment = installmentAmount*12;
-    setInstallmentPerInterval(Round(installmentAmount));
-    setTotalRepay(Round(totalPayment));
-    setTotalBSMV(Round((totalPayment-P)*bsmv/i));
-    setTotalKKDF(Round((totalPayment-P)*kkdf/i));
-
-    const calculateInstallments = (count) => {
-      var installmentsArray = new Array(count);
-      for(let i=0; i<count; i++)
-      {
-        let prevRemaining = inputs.loanAmount;
-        if(i>0) prevRemaining = prevRemainingOriginal.current;
-        let idx = i+1;
-        let amount = Round(installmentAmount);
-        let profitAmount =  Round(prevRemaining * interestRate());
-        let kkdf = Round(prevRemaining * Number(inputs.kkdfTaxRate));
-        let bsmv = Round(prevRemaining * Number(inputs.bsmvTaxRate));
-        let original = Round(amount - profitAmount - kkdf - bsmv);
-        let remainingOriginal = Round(prevRemaining-original);
-        prevRemainingOriginal.current =remainingOriginal;
-        let installment = {idx, amount ,original, remainingOriginal, profitAmount, kkdf, bsmv};
-        installmentsArray.push(installment);
-        
-      }
-      setInstallments(installmentsArray);
-    }
-
-    calculateInstallments(inputs.numberOfInstallments);
+    let installments = calculateInstallments(
+      inputs.calculationType,
+      inputs.profitRate,
+      inputs.profitRateInterval,
+      inputs.interval,
+      inputs.numberOfInstallments,
+      inputs.loanAmount,
+      inputs.kkdfTaxRate,
+      inputs.bsmvTaxRate
+      )
+    setInstallments(installments);
 
   },[inputs])
 
@@ -117,8 +92,6 @@ function App() {
     inputButton.current.callInputs();
     inputButton.current.shakeInput();
   }
-
-  
 
   return (
     <main>
