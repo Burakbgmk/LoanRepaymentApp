@@ -1,22 +1,26 @@
+import {ThemeContext} from "../context/ThemeContext";
+import { DataContext } from "../context/DataContext";
+import { useContext } from "react";
 
 function Result(props) {
-    
+    const theme = useContext(ThemeContext);
+    const data = useContext(DataContext);
     const showResult = (results) => {
         return(
-            <div>
                 <div className="result-container">
                     <p>Total Repay: {results.totalRepay}</p> 
                     <p>Installment Amount: {results.installmentPerInterval}</p> 
                     <p>Total BSMV Tax: {results.totalBSMV}</p> 
                     <p>Total KKDF Tax: {results.totalKKDF}</p> 
                 </div>
-            </div>
         )
     }
 
 
     return (
-        (props.trigger) ? showResult(props.results) : showResult("","","","")
+        <div style={theme}>
+            {(props.trigger) ? showResult(data) : showResult("","","","")}
+        </div>
     )
 }
 

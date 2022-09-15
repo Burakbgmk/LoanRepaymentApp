@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import './App.css';
-import Result from './Result';
-import UserInput from './UserInput';
-import RepaymentTable from './RepaymentTable';
-import {calculateResult, calculateInstallments} from './Calculations.js';
-import {validateNumber} from './Validator.js';
-
+import './styling/App.css';
+import Result from './component/Result';
+import UserInput from './component/UserInput';
+import RepaymentTable from './component/RepaymentTable';
+import {calculateResult, calculateInstallments} from './common/Calculations.js';
+import {validateInputs} from './common/Validator.js';
+import {ThemeContext, themes} from './context/ThemeContext';
+import {DataContext} from './context/DataContext';
 
 function App() {
   const [inputs, setInputs] = useState([]);
@@ -13,44 +14,19 @@ function App() {
   const [results, setResults] = useState([]);
   const [displayTable, setDisplayTable] = useState(false);
   const [displayResult, setDisplayResult] = useState(false);
+  const [theme, setTheme] = useState(themes.light);
   const inputButton = useRef(null);
 
   useEffect(() => {
     if(inputs.length === 0) return;
 
-    Object.values(inputs).forEach(x=> {
-      if(validateNumber(x) === false)
-      {
-        setDisplayResult(false);
-        return;
-      }
-      else setDisplayResult(true);
-    })
+    if(validateInputs(inputs)) setDisplayResult(true);
+    else setDisplayResult(false);
     
-
-    let results = calculateResult(
-      inputs.calculationType,
-      inputs.profitRate,
-      inputs.profitRateInterval,
-      inputs.interval,
-      inputs.loanAmount,
-      inputs.numberOfInstallments,
-      inputs.bsmvTaxRate,
-      inputs.kkdfTaxRate
-      )
-
+    let results = calculateResult({...inputs});
     setResults(results);
 
-    let installments = calculateInstallments(
-      inputs.calculationType,
-      inputs.profitRate,
-      inputs.profitRateInterval,
-      inputs.interval,
-      inputs.numberOfInstallments,
-      inputs.loanAmount,
-      inputs.kkdfTaxRate,
-      inputs.bsmvTaxRate
-      )
+    let installments = calculateInstallments({...inputs});
     setInstallments(installments);
 
   },[inputs])
@@ -64,46 +40,57 @@ function App() {
 
   const calculateButtonClicked = () => {
     inputButton.current.callInputs();
-    inputButton.current.shakeInput();
+    inputButton.current.shakeInput(!displayResult);
+    
+  }
+
+  const toggleTheme = () => {
+    if(theme === themes.dark){
+      setTheme(themes.light);
+    }
+    else{
+      setTheme(themes.dark);
+    }
   }
 
   return (
     <main>
-      <div>
-        <div className='static-container'>
-          <div className='input-container'>
-            <UserInput 
-            updateInputParams={updateInputs}
-            ref={inputButton}
-            /> 
+      <button onClick={toggleTheme}>
+        {theme === themes.dark ? "Dark Theme" : "Light Theme"}
+      </button>
+      <ThemeContext.Provider value={theme}>
+        <DataContext.Provider value={results}>
+          <div className='static-container'>
+            <div className='input-container'>
+              <UserInput 
+              updateInputParams={updateInputs}
+              ref={inputButton}
+              /> 
+              <button onClick={calculateButtonClicked}>Calculate</button>
+            </div>
+            <div className='result-container'>
+              <Result 
+              trigger = {displayResult}
+              />
+              {
+              (displayResult) && (<button 
+              className="open-table-btn" 
+              onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
+              }
+            </div>
           </div>
-          <div className='calculatebtn-container'>
-            <button onClick={calculateButtonClicked}>Calculate</button>
+        </DataContext.Provider>
+        <DataContext.Provider value={installments}>
+          <div className='pop-up-container'>
+            {
+              <RepaymentTable
+                trigger = {displayTable}
+                setTrigger = {setDisplayTable}
+              />
+            }
           </div>
-          <div className='result-container'>
-          <Result 
-          results = {results}
-          trigger = {displayResult}
-          />
-          {
-          (displayResult) && (<button 
-          className="open-table-btn" 
-          onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
-          }
-          </div>
-        </div>
-        <div className='pop-up-container'>
-          {
-            <RepaymentTable
-              installments = {installments}
-              trigger = {displayTable}
-              setTrigger = {setDisplayTable}
-            />
-          }
-        </div>
-      </div>
-      
-      
+        </DataContext.Provider>
+      </ThemeContext.Provider>
     </main>
     
   );

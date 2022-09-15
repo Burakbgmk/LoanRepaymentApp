@@ -1,7 +1,11 @@
-import './RepaymentTable.css';
+import '../styling/RepaymentTable.css';
+import {ThemeContext} from "../context/ThemeContext";
+import { DataContext } from '../context/DataContext';
+import {useContext} from 'react';
 
 function RepaymentTable(props) {
-
+    const theme = useContext(ThemeContext);
+    const data = useContext(DataContext);
     const resultPerInstallment = (installment) => {
         if(!installment.idx) return;
         return (
@@ -20,8 +24,8 @@ function RepaymentTable(props) {
     
     return(
         (props.trigger) && (
-        <div className="popup">
-            <div className="popup-inner">
+        <div  className="popup" style={theme}>
+            <div className="popup-inner" style={theme}>
                     <div className="row">
                         <h2>Items</h2>
                     </div>
@@ -39,7 +43,7 @@ function RepaymentTable(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {props.installments.map(resultPerInstallment)}
+                                {data.map(resultPerInstallment)}
                             </tbody>
                         </table>
                     </div>

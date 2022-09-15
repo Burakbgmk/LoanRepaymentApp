@@ -11,12 +11,12 @@ const interestRate = (type, profitRate, profitRateInterval, interval) => {
         }
         else
         {
-            return ((1+Number(profitRate))**(Number(profitRateInterval)/Number(interval)))-1
+            return ((1+Number(profitRate))**(Number(profitRateInterval)/Number(interval)))-1;
         }
     }
 
-export function calculateResult (type, profitRate, profitRateInterval, interval, loanAmount, numberOfInstallments, bsmvTaxRate, kkdfTaxRate) {
-        let i = interestRate(type ,profitRate, profitRateInterval, interval) + Number(bsmvTaxRate) + Number(kkdfTaxRate);
+export function calculateResult ({calculationType, profitRate, profitRateInterval, interval, loanAmount, numberOfInstallments, bsmvTaxRate, kkdfTaxRate}) {
+        let i = interestRate(calculationType ,profitRate, profitRateInterval, interval) + Number(bsmvTaxRate) + Number(kkdfTaxRate);
         let P = Number(loanAmount);
         let n = Number(numberOfInstallments);
         let installmentPerInterval = customRound(P*((i*(i+1)**n)/(((i+1)**n)-1)));
@@ -27,8 +27,8 @@ export function calculateResult (type, profitRate, profitRateInterval, interval,
         return {totalRepay, installmentPerInterval, totalBSMV, totalKKDF};
     }
 
-export function calculateInstallments (type ,profitRate, profitRateInterval, interval, numberOfInstallments, loanAmount, kkdfTaxRate, bsmvTaxRate) {
-        let i = interestRate(type ,profitRate, profitRateInterval, interval) + Number(bsmvTaxRate) + Number(kkdfTaxRate);
+export function calculateInstallments ({calculationType ,profitRate, profitRateInterval, interval, numberOfInstallments, loanAmount, kkdfTaxRate, bsmvTaxRate}) {
+        let i = interestRate(calculationType ,profitRate, profitRateInterval, interval) + Number(bsmvTaxRate) + Number(kkdfTaxRate);
         let P = Number(loanAmount);
         let n = Number(numberOfInstallments);
         let installmentAmount = P*((i*(i+1)**n)/(((i+1)**n)-1));
@@ -38,7 +38,7 @@ export function calculateInstallments (type ,profitRate, profitRateInterval, int
         {
             let idx = i+1;
             let amount = installmentAmount;
-            let profitAmount =  prevRemaining * interestRate(type ,profitRate, profitRateInterval, interval);
+            let profitAmount =  prevRemaining * interestRate(calculationType ,profitRate, profitRateInterval, interval);
             let kkdf = prevRemaining * Number(kkdfTaxRate);
             let bsmv = prevRemaining * Number(bsmvTaxRate);
             let original = amount - profitAmount - kkdf - bsmv;

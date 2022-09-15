@@ -1,5 +1,6 @@
 import { useImperativeHandle } from "react";
-import { useState, useRef, forwardRef } from "react";
+import { useState, useRef, forwardRef, useContext } from "react";
+import {ThemeContext} from "../context/ThemeContext";
 
 function UserInput(props, ref) {
     const [loanAmount,setLoanAmount] = useState(0);
@@ -11,13 +12,28 @@ function UserInput(props, ref) {
     const [kkdfTaxRate,setKkdfTaxRate] = useState(0);
     const [calculationType, setCalculationType] = useState(0);
 
-    const inputRef = useRef();
+    const loanField = useRef();
+    const installmentNumberField = useRef();
+    const profitRateField = useRef();
+    const bsmvField = useRef();
+    const kkdfField = useRef();
+
+    const theme = useContext(ThemeContext);
+
     useImperativeHandle(ref, () => ({
         callInputs: () => {
             calculateButtonPressed();
         },
-        shakeInput: () => {
-            inputRef.current.focus();
+        shakeInput: (isEmpthy) => {
+            //inputRef.current.focus();
+            if(isEmpthy){
+                loanField.current.placeholder = "Compulsory Area";
+                installmentNumberField.current.placeholder = "Compulsory Area";
+                profitRateField.current.placeholder = "Compulsory Area";
+                bsmvField.current.placeholder = "Compulsory Area";
+                kkdfField.current.placeholder = "Compulsory Area";
+            } 
+            
         }
     }));
 
@@ -35,7 +51,7 @@ function UserInput(props, ref) {
     }
 
     return (
-        <div>
+        <div style={theme}>
             <div className="input-container">
                 <div className="row">
                     <div className="col">
@@ -44,21 +60,23 @@ function UserInput(props, ref) {
                         id="loan-field"
                         type="number"
                         onChange={(e) => setLoanAmount(e.target.value)}
-                        ref={inputRef} />
+                        ref={loanField} />
                     </div>
                     <div className="col">
                         <label htmlFor="ins-number-field">Number of installments</label>
                         <input 
                         id="ins-number-field"
                         type="number"
-                        onChange={(e) => setNumberOfInstallments(e.target.value)} />
+                        onChange={(e) => setNumberOfInstallments(e.target.value)}
+                        ref={installmentNumberField} />
                     </div>
                     <div className="col">
                         <label htmlFor="profit-rate-field">Profit Rate</label>
                         <input 
                         id="profit-rate-field"
                         type="number"
-                        onChange={(e) => setProfitRate(e.target.value)} />
+                        onChange={(e) => setProfitRate(e.target.value)}
+                        ref={profitRateField} />
                         <label htmlFor="per-week">Per Week</label>
                         <input id="per-week" type="radio" name="per-interval" onClick={() => {setProfitRateInterval(52)}}/>
                         <label htmlFor="per-month">Per Month</label>
@@ -77,9 +95,9 @@ function UserInput(props, ref) {
                     </div>
                     <div className="col">
                         <label htmlFor="bsmv">BSMV</label>
-                        <input id="bsmv" type="number" name ="tax1" onChange={(e) => {setBsmvTaxRate(e.target.value)}}/> <br />
+                        <input id="bsmv" type="number" name ="tax1" ref={bsmvField} onChange={(e) => {setBsmvTaxRate(e.target.value)}}/> <br />
                         <label htmlFor="kkdf">KKDF</label>
-                        <input id="kkdf" type="number" name ="tax2" onChange={(e) => {setKkdfTaxRate(e.target.value)}}/>
+                        <input id="kkdf" type="number" name ="tax2" ref={kkdfField} onChange={(e) => {setKkdfTaxRate(e.target.value)}}/>
                     </div>
                     <div className="col">
                         <label htmlFor="simple">Simple Interest</label>
