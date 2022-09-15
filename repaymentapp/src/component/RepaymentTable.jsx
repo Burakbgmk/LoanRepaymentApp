@@ -24,7 +24,7 @@ function RepaymentTable(props) {
     
     return(
         (props.trigger) && (
-        <div  className="popup" style={theme}>
+        <div  className="popup" >
             <div className="popup-inner" style={theme}>
                     <div className="row">
                         <h2>Items</h2>

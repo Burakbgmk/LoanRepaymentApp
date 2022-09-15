@@ -7,13 +7,14 @@ import {calculateResult, calculateInstallments} from './common/Calculations.js';
 import {validateInputs} from './common/Validator.js';
 import {ThemeContext, themes} from './context/ThemeContext';
 import {DataContext} from './context/DataContext';
+import CustomHeader from './component/CustomHeader';
 
 function App() {
   const [inputs, setInputs] = useState([]);
-  const [installments, setInstallments] = useState([]);
   const [results, setResults] = useState([]);
-  const [displayTable, setDisplayTable] = useState(false);
+  const [installments, setInstallments] = useState([]);
   const [displayResult, setDisplayResult] = useState(false);
+  const [displayTable, setDisplayTable] = useState(false);
   const [theme, setTheme] = useState(themes.light);
   const inputButton = useRef(null);
 
@@ -55,41 +56,45 @@ function App() {
 
   return (
     <main>
-      <button onClick={toggleTheme}>
-        {theme === themes.dark ? "Dark Theme" : "Light Theme"}
-      </button>
       <ThemeContext.Provider value={theme}>
-        <DataContext.Provider value={results}>
-          <div className='static-container'>
-            <div className='input-container'>
-              <UserInput 
-              updateInputParams={updateInputs}
-              ref={inputButton}
-              /> 
-              <button onClick={calculateButtonClicked}>Calculate</button>
+        <header>
+          <CustomHeader 
+          toggleTheme={toggleTheme} 
+          />
+        </header>
+        <body style={theme}>
+          <DataContext.Provider value={results}>
+            <div className='static-container'>
+              <div className='input-container'>
+                <UserInput 
+                updateInputParams={updateInputs}
+                ref={inputButton}
+                /> 
+                <button onClick={calculateButtonClicked}>Calculate</button>
+              </div>
+              <div className='result-container'>
+                <Result 
+                trigger = {displayResult}
+                />
+                {
+                (displayResult) && (<button 
+                className="open-table-btn" 
+                onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
+                }
+              </div>
             </div>
-            <div className='result-container'>
-              <Result 
-              trigger = {displayResult}
-              />
+          </DataContext.Provider>
+          <DataContext.Provider value={installments}>
+            <div className='pop-up-container'>
               {
-              (displayResult) && (<button 
-              className="open-table-btn" 
-              onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
+                <RepaymentTable
+                  trigger = {displayTable}
+                  setTrigger = {setDisplayTable}
+                />
               }
             </div>
-          </div>
-        </DataContext.Provider>
-        <DataContext.Provider value={installments}>
-          <div className='pop-up-container'>
-            {
-              <RepaymentTable
-                trigger = {displayTable}
-                setTrigger = {setDisplayTable}
-              />
-            }
-          </div>
-        </DataContext.Provider>
+          </DataContext.Provider>
+        </body>
       </ThemeContext.Provider>
     </main>
     

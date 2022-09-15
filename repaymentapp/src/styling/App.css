@@ -1,8 +1,26 @@
-main  {
+main, header, body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Fira Sans',sans-serif;
+}
+
+main{
+    height: 100%;
+}
+
+.header-container{
+    
+}
+
+.headertext-container{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+    text-align: center;
+}
+
+.headerbtn-container{
 }
 
 
