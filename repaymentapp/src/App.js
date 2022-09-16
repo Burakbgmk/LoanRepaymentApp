@@ -57,44 +57,55 @@ function App() {
   return (
     <main>
       <ThemeContext.Provider value={theme}>
-        <header>
-          <CustomHeader 
-          toggleTheme={toggleTheme} 
-          />
-        </header>
-        <body style={theme}>
-          <DataContext.Provider value={results}>
-            <div className='static-container'>
-              <div className='input-container'>
-                <UserInput 
-                updateInputParams={updateInputs}
-                ref={inputButton}
-                /> 
-                <button onClick={calculateButtonClicked}>Calculate</button>
+        <div className='inner-main' style={theme}>
+          <header>
+            <CustomHeader 
+            toggleTheme={toggleTheme} 
+            />
+          </header>
+          <div className='body-container'>
+            <DataContext.Provider value={results}>
+              <div className='static-container'>
+                <div className='input-container'>
+                  <div className='input-inner'>
+                    <UserInput 
+                    updateInputParams={updateInputs}
+                    ref={inputButton}
+                    /> 
+                    <div className='calculate-btn-container'>
+                      <button className='calculate-btn' onClick={calculateButtonClicked}>Calculate</button>
+                    </div>
+                  </div>
+                </div>
+                <div className='result-container'>
+                  <div className='result-inner'>
+                    <Result 
+                    trigger = {displayResult}
+                    />
+                    <div className='popup-btn-container'>
+                      {
+                      (displayResult) && (<button 
+                      className="open-table-btn" 
+                      onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
+                      }
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className='result-container'>
-                <Result 
-                trigger = {displayResult}
-                />
+            </DataContext.Provider>
+            <DataContext.Provider value={installments}>
+              <div className='pop-up-container'>
                 {
-                (displayResult) && (<button 
-                className="open-table-btn" 
-                onClick={() => {setDisplayTable(true)}}>Show Repayment Table</button>)
+                  <RepaymentTable
+                    trigger = {displayTable}
+                    setTrigger = {setDisplayTable}
+                  />
                 }
               </div>
-            </div>
-          </DataContext.Provider>
-          <DataContext.Provider value={installments}>
-            <div className='pop-up-container'>
-              {
-                <RepaymentTable
-                  trigger = {displayTable}
-                  setTrigger = {setDisplayTable}
-                />
-              }
-            </div>
-          </DataContext.Provider>
-        </body>
+            </DataContext.Provider>
+          </div>
+
+        </div>
       </ThemeContext.Provider>
     </main>
     

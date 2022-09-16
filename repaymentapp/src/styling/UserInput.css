@@ -1,0 +1,21 @@
+.input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+
+.input-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 400px;
+    margin: 5px;
+    padding: 2px;
+}
+
+.input-col{
+}
+.label-col{
+    margin-right: 5px;
+}

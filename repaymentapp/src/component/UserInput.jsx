@@ -1,6 +1,7 @@
 import { useImperativeHandle } from "react";
 import { useState, useRef, forwardRef, useContext } from "react";
 import {ThemeContext} from "../context/ThemeContext";
+import "../styling/UserInput.css";
 
 function UserInput(props, ref) {
     const [loanAmount,setLoanAmount] = useState(0);
@@ -17,6 +18,9 @@ function UserInput(props, ref) {
     const profitRateField = useRef();
     const bsmvField = useRef();
     const kkdfField = useRef();
+    const typeField = useRef();
+    const intervalField = useRef();
+    const rateIntervalField = useRef();
 
     const theme = useContext(ThemeContext);
 
@@ -32,10 +36,15 @@ function UserInput(props, ref) {
                 profitRateField.current.placeholder = "Compulsory Area";
                 bsmvField.current.placeholder = "Compulsory Area";
                 kkdfField.current.placeholder = "Compulsory Area";
+                typeField.current.innerText = "Please select..";
+                intervalField.current.innerText = "Please select..";
+                rateIntervalField.current.innerText = "Please select..";
             } 
             
         }
     }));
+
+    
 
     const calculateButtonPressed = () => {
         props.updateInputParams({
@@ -53,58 +62,65 @@ function UserInput(props, ref) {
     return (
         <div style={theme}>
             <div className="input-container">
-                <div className="row">
-                    <div className="col">
+                <div className="input-row">
+                    <div className="label-col">
                         <label htmlFor="loan-field">Loan Amount</label>
+                    </div>
+                    <div className="input-col">
                         <input 
                         id="loan-field"
                         type="number"
                         onChange={(e) => setLoanAmount(e.target.value)}
                         ref={loanField} />
                     </div>
-                    <div className="col">
-                        <label htmlFor="ins-number-field">Number of installments</label>
-                        <input 
-                        id="ins-number-field"
-                        type="number"
-                        onChange={(e) => setNumberOfInstallments(e.target.value)}
-                        ref={installmentNumberField} />
-                    </div>
-                    <div className="col">
-                        <label htmlFor="profit-rate-field">Profit Rate</label>
-                        <input 
-                        id="profit-rate-field"
-                        type="number"
-                        onChange={(e) => setProfitRate(e.target.value)}
-                        ref={profitRateField} />
-                        <label htmlFor="per-week">Per Week</label>
-                        <input id="per-week" type="radio" name="per-interval" onClick={() => {setProfitRateInterval(52)}}/>
-                        <label htmlFor="per-month">Per Month</label>
-                        <input id="per-month" type="radio" name="per-interval" onClick={() => {setProfitRateInterval(12)}} />
-                        <label htmlFor="per-year">Per Year</label>
-                        <input id="per-year" type="radio" name="per-interval" onClick={() => {setProfitRateInterval(1)}}/>
+                </div>
+                <div className="input-row">
+                    <label htmlFor="ins-number-field">Number of installments</label>
+                    <input 
+                    id="ins-number-field"
+                    type="number"
+                    onChange={(e) => setNumberOfInstallments(e.target.value)}
+                    ref={installmentNumberField} />
+                </div>
+                <div className="input-row">
+                    <label htmlFor="profit-rate-field">Profit Rate</label>
+                    <input 
+                    id="profit-rate-field"
+                    type="number"
+                    onChange={(e) => setProfitRate(e.target.value)}
+                    ref={profitRateField} />
+                    <select onChange={(e) => setProfitRateInterval(e.target.value)}>
+                        <option ref={rateIntervalField} value={0}></option>
+                        <option value={52}>Per Week</option>
+                        <option value={12}>Per Month</option>
+                        <option value={1}>Per Year</option>
+                    </select>
 
-                    </div>
-                    <div className="col">
-                        <label htmlFor="weekly">Weekly</label>
-                        <input id="weekly" type="radio" name ="interval" onClick={() => {setInterval(52)}}/> <br />
-                        <label htmlFor="monthly">Monthly</label>
-                        <input id="monthly" type="radio" name ="interval" onClick={() => {setInterval(12)}}/> <br />
-                        <label htmlFor="annual">Annual</label>
-                        <input id="annual" type="radio" name ="interval" onClick={() => {setInterval(1)}}/>
-                    </div>
-                    <div className="col">
-                        <label htmlFor="bsmv">BSMV</label>
-                        <input id="bsmv" type="number" name ="tax1" ref={bsmvField} onChange={(e) => {setBsmvTaxRate(e.target.value)}}/> <br />
-                        <label htmlFor="kkdf">KKDF</label>
-                        <input id="kkdf" type="number" name ="tax2" ref={kkdfField} onChange={(e) => {setKkdfTaxRate(e.target.value)}}/>
-                    </div>
-                    <div className="col">
-                        <label htmlFor="simple">Simple Interest</label>
-                        <input id="simple" type="radio" name ="calc-type" onClick={() => {setCalculationType(1)}}/> <br />
-                        <label htmlFor="compound">Compound Interest</label>
-                        <input id="compound" type="radio" name ="calc-type" onClick={() => {setCalculationType(2)}}/>
-                    </div>
+                </div>
+                <div className="input-row">
+                    <label htmlFor="bsmv">BSMV</label>
+                    <input id="bsmv" type="number" name ="tax1" ref={bsmvField} onChange={(e) => {setBsmvTaxRate(e.target.value)}}/>
+                </div>
+                <div className="input-row">    
+                    <label htmlFor="kkdf">KKDF</label>
+                    <input id="kkdf" type="number" name ="tax2" ref={kkdfField} onChange={(e) => {setKkdfTaxRate(e.target.value)}}/>
+                </div>
+                <div className="input-row">
+                    <label htmlFor="repayment-interval">Repayment Interval</label>
+                    <select id="repayment-interval" onChange={(e) => setInterval(e.target.value)}>
+                        <option ref={intervalField} value={0}></option>
+                        <option value={52}>Weekly</option>
+                        <option value={12}>Monthly</option>
+                        <option value={1}>Annual</option>
+                    </select>
+                </div>
+                <div className="input-row">
+                    <label htmlFor="interest-type">Interest Type</label>
+                    <select id="interest-type" onChange={(e) => setCalculationType(e.target.value)}>
+                        <option ref={typeField} value={0}></option>
+                        <option value={1}>Simple</option>
+                        <option value={2}>Compound</option>
+                    </select>
                 </div>
             </div>
             

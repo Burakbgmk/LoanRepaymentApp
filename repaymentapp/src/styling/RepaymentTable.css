@@ -11,15 +11,75 @@
 }
 
 .popup-inner{
-    position: relative;
+    position: absolute;
     padding: 32px;
     width: 100%;
     max-width: 800px;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
-.popup-inner .close-btn{
+
+
+.close-btn{
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 0px;
+    right: 0px;
 }
+
+.pop-up-header{
+    position: relative;
+    text-align: center;
+    height: 50px;
+    width: 775px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 1px 1px 3px 1px; border: 1px solid rgb(28, 110, 164); 
+}
+
+.pop-up-body{
+    margin: 5px 10px;
+    
+}
+
+
+.table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.thead {
+    z-index: 100;
+}
+
+.trHead {
+    background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 1px 1px 3px 1px; border: 1px solid rgb(28, 110, 164); 
+    
+}
+
+.th{
+    padding: 8px;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.tBody{
+
+}
+
+.trBody {
+    background-color: white;
+}
+
+.td {
+    padding: 8px;
+    border: 1px solid rgb(237, 237, 237);
+    font-size: 14px;
+}
+

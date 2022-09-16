@@ -7,7 +7,7 @@ function Result(props) {
     const data = useContext(DataContext);
     const showResult = (results) => {
         return(
-                <div className="result-container">
+                <div className="result-show">
                     <p>Total Repay: {results.totalRepay}</p> 
                     <p>Installment Amount: {results.installmentPerInterval}</p> 
                     <p>Total BSMV Tax: {results.totalBSMV}</p> 

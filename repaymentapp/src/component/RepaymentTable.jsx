@@ -2,6 +2,8 @@ import '../styling/RepaymentTable.css';
 import {ThemeContext} from "../context/ThemeContext";
 import { DataContext } from '../context/DataContext';
 import {useContext} from 'react';
+import {exportPDF} from '../common/PdfExport';
+import "jspdf-autotable";
 
 function RepaymentTable(props) {
     const theme = useContext(ThemeContext);
@@ -9,8 +11,8 @@ function RepaymentTable(props) {
     const resultPerInstallment = (installment) => {
         if(!installment.idx) return;
         return (
-            <tr>
-                <th scope="row">{installment.idx}</th>
+            <tr style={theme} className='trBody'>
+                <th scope="th">{installment.idx}</th>
                 <td>{installment.amount}</td>
                 <td>{installment.original}</td>
                 <td>{installment.remainingOriginal}</td>
@@ -21,36 +23,38 @@ function RepaymentTable(props) {
         )
     }
 
+
+    
+
     
     return(
         (props.trigger) && (
         <div  className="popup" >
             <div className="popup-inner" style={theme}>
-                    <div className="row">
-                        <h2>Items</h2>
-                    </div>
-                    <div className="row">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Installment Number</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Original</th>
-                                    <th scope="col">Remaining Original</th>
-                                    <th scope="col">Profit Amount</th>
-                                    <th scope="col">KKDF</th>
-                                    <th scope="col">BSMV</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map(resultPerInstallment)}
-                            </tbody>
-                        </table>
-                    </div>
-                    <button className='close-btn' onClick={() => props.setTrigger(false)}>Close Table</button>
-                    
+                <div className="pop-up-header">
+                    <h2>Items</h2>
                 </div>
-
+                <div className='pop-up-body'>
+                    <table className="table">
+                        <thead className='thead'>
+                            <tr className='trHead'>
+                                <th scope="th">Installment Number</th>
+                                <th scope="th">Amount</th>
+                                <th scope="th">Original</th>
+                                <th scope="th">Remaining Original</th>
+                                <th scope="th">Profit Amount</th>
+                                <th scope="th">KKDF</th>
+                                <th scope="th">BSMV</th>
+                            </tr>
+                        </thead>
+                        <tbody className='tbody'>
+                            {data.map(resultPerInstallment)}
+                        </tbody>
+                    </table>
+                </div>
+                <button className='close-btn' onClick={() => props.setTrigger(false)}>Close Table</button>
+                <button onClick={() => exportPDF(data)}>Download PDF</button>
+            </div>
         </div>
         )
     ) 

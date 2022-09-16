@@ -5,11 +5,11 @@ const customRound = (n) => {
     }
 
 const interestRate = (type, profitRate, profitRateInterval, interval) => {
-        if(type === 1)
+        if(Number(type) === 1)
         {
             return (Number(profitRate) * Number(profitRateInterval))/Number(interval);
         }
-        else
+        else if(Number(type) === 2)
         {
             return ((1+Number(profitRate))**(Number(profitRateInterval)/Number(interval)))-1;
         }

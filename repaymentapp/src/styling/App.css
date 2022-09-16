@@ -1,39 +1,72 @@
-main, header, body {
+html, main, header, body {
     margin: 0;
     padding: 0;
+    border: 0;
     font-family: 'Fira Sans',sans-serif;
-}
-
-main{
-    height: 100%;
-}
-
-.header-container{
     
 }
 
+html{
+    max-height: 931px;
+}
+
+
+.inner-main{
+    height: 100%;
+    
+}
+
+
+
+
+
 .headertext-container{
-    margin: auto;
+    margin: 5px;
+    margin-left: 330px;
     width: 50%;
-    border: 3px solid green;
+    box-shadow: 2px 2px 7px 1px #1C6EA4;
     padding: 10px;
     text-align: center;
 }
 
-.headerbtn-container{
-}
 
 
 .static-container{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     
 }
 
 .input-container{
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    
 }
+
+.input-inner{
+    padding: 3px;
+    box-shadow: 2px 2px 7px 1px #1C6EA4;
+}
+
+.result-container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.result-inner{
+    padding: 3px;
+    box-shadow: 2px 2px 7px 1px #1C6EA4;
+}
+
+.result-show{
+    height: 245px;
+    
+}
+
+
+
 
 .result-container{
     min-width: 205px;
@@ -41,4 +74,45 @@ main{
 
 ::placeholder{
     color: red;
+}
+
+button {
+    color: rgb(255, 255, 255); 
+    font-size: 15px; 
+    line-height: 15px; 
+    padding: 7px; 
+    border-radius: 7px; 
+    font-family: Georgia, serif; 
+    font-weight: normal; 
+    text-decoration: none; 
+    font-style: normal; 
+    font-variant: normal; 
+    text-transform: none; 
+    background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px; border: 2px solid rgb(28, 110, 164); 
+    display: inline-block;
+    margin: 7px;
+}
+button:hover {
+    background: #1C6EA4;
+}
+button:active {
+    background: #144E75; 
+}
+.calculate-btn, .open-table-btn{
+    width: 90%;
+
+}
+
+.calculate-btn-container{
+    display: flex;
+    justify-content: center;
+    
+}
+.popup-btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+input, select {
+    box-shadow: 2px 2px 7px 1px #1C6EA4;
 }
