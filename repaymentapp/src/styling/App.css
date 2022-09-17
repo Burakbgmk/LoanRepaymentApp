@@ -3,32 +3,25 @@ html, main, header, body {
     padding: 0;
     border: 0;
     font-family: 'Fira Sans',sans-serif;
-    
 }
-
-html{
-    max-height: 931px;
-}
-
 
 .inner-main{
     height: 100%;
     
 }
 
-
-
-
-
 .headertext-container{
-    margin: 5px;
-    margin-left: 330px;
-    width: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.headertext-inner{
     box-shadow: 2px 2px 7px 1px #1C6EA4;
     padding: 10px;
     text-align: center;
+    width: 48%;
 }
-
 
 
 .static-container{
@@ -41,7 +34,6 @@ html{
     display: flex;
     flex-direction: column;
     padding: 10px;
-    
 }
 
 .input-inner{

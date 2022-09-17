@@ -13,8 +13,11 @@ function CustomHeader(props) {
                 {theme === themes.dark ? "Dark Theme" : "Light Theme"}
                 </button>
             </div>
+            
             <div className='headertext-container'>
-                <h1>Loan Repayment Calculator</h1>
+                <div className="headertext-inner">
+                    <h1>Loan Repayment Calculator</h1>  
+                </div>
             </div>
         </div>
     )
