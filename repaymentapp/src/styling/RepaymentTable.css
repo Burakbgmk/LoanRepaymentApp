@@ -12,17 +12,24 @@
 
 .popup-inner{
     position: absolute;
-    padding: 32px;
+    padding: 50px;
     width: 100%;
     max-width: 800px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    border: 5px solid #1C6EA4;
 }
 
 
 
 .close-btn{
+    position: absolute;
+    bottom: 2px;
+    right: 0px;
+}
+
+.pdf-btn{
     position: absolute;
     top: 0px;
     right: 0px;
@@ -36,12 +43,14 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 20px;
+    margin-bottom: 10px;
     background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 1px 1px 3px 1px; border: 1px solid rgb(28, 110, 164); 
 }
 
 .pop-up-body{
     margin: 5px 10px;
-    
+    border: 3px solid #1C6EA4;
+    border-radius: 11px;
 }
 
 
@@ -51,15 +60,12 @@
     text-align: center;
     border-radius: 8px;
     overflow: hidden;
+    height: 400px;
 }
 
-.thead {
-    z-index: 100;
-}
 
 .trHead {
     background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 1px 1px 3px 1px; border: 1px solid rgb(28, 110, 164); 
-    
 }
 
 .th{
@@ -69,16 +75,8 @@
     font-size: 14px;
 }
 
-.tBody{
-
-}
-
-.trBody {
-    background-color: white;
-}
 
 .td {
-    padding: 8px;
     border: 1px solid rgb(237, 237, 237);
     font-size: 14px;
 }

@@ -20,7 +20,7 @@ html, main, header, body {
     box-shadow: 2px 2px 7px 1px #1C6EA4;
     padding: 10px;
     text-align: center;
-    width: 48%;
+    width: 55%;
 }
 
 
@@ -53,15 +53,30 @@ html, main, header, body {
 }
 
 .result-show{
-    height: 245px;
-    
+    height: 260px;
+    width: 300px;
 }
 
+table.results-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    height: 220px;
+}
+table.results-table td, table.results-table {
+  border: 1px solid #AAAAAA;
+  padding: 3px 3px;
+}
+table.results-table td {
+  font-size: 14px;
+}
 
-
+td{
+    width: 150px;
+}
 
 .result-container{
-    min-width: 205px;
+    min-width: 300px;
 }
 
 ::placeholder{

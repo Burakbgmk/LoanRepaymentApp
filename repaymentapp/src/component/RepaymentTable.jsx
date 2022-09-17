@@ -53,7 +53,7 @@ function RepaymentTable(props) {
                     </table>
                 </div>
                 <button className='close-btn' onClick={() => props.setTrigger(false)}>Close Table</button>
-                <button onClick={() => exportPDF(data)}>Download PDF</button>
+                <button className='pdf-btn' onClick={() => exportPDF(data)}>Download <i class="fa fa-file-pdf-o"></i></button>
             </div>
         </div>
         )
