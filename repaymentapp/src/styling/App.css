@@ -50,11 +50,12 @@ html, main, header, body {
 .result-inner{
     padding: 3px;
     box-shadow: 2px 2px 7px 1px #1C6EA4;
+    height: 100%;
 }
 
 .result-show{
     height: 260px;
-    width: 300px;
+    width: 100%;
 }
 
 table.results-table {
@@ -75,9 +76,7 @@ td{
     width: 150px;
 }
 
-.result-container{
-    min-width: 300px;
-}
+
 
 ::placeholder{
     color: red;

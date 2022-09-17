@@ -21,8 +21,14 @@ function App() {
   useEffect(() => {
     if(inputs.length === 0) return;
 
-    if(validateInputs(inputs)) setDisplayResult(true);
-    else setDisplayResult(false);
+    if(validateInputs(inputs).isValid){
+      setDisplayResult(true);
+      inputButton.current.warnInput(validateInputs(inputs).arr);
+    } 
+    else {
+      setDisplayResult(false);
+      inputButton.current.warnInput(validateInputs(inputs).arr);
+    }
     
     let results = calculateResult({...inputs});
     setResults(results);
@@ -30,7 +36,12 @@ function App() {
     let installments = calculateInstallments({...inputs});
     setInstallments(installments);
 
+    
+    
+    
   },[inputs])
+
+
 
   const updateInputs = (inputParams) => {
      if(!(Object.keys(inputs).every(
@@ -41,8 +52,6 @@ function App() {
 
   const calculateButtonClicked = () => {
     inputButton.current.callInputs();
-    inputButton.current.shakeInput(!displayResult);
-    
   }
 
   const toggleTheme = () => {

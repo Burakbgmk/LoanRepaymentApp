@@ -28,19 +28,24 @@ function UserInput(props, ref) {
         callInputs: () => {
             calculateButtonPressed();
         },
-        shakeInput: (isEmpthy) => {
+        warnInput: (empthyInputs) => {
             //inputRef.current.focus();
-            if(isEmpthy){
-                loanField.current.placeholder = "Compulsory Area";
-                installmentNumberField.current.placeholder = "Compulsory Area";
-                profitRateField.current.placeholder = "Compulsory Area";
-                bsmvField.current.placeholder = "Compulsory Area";
-                kkdfField.current.placeholder = "Compulsory Area";
-                typeField.current.innerText = "Please select..";
-                intervalField.current.innerText = "Please select..";
-                rateIntervalField.current.innerText = "Please select..";
-            } 
-            
+            if(empthyInputs.some(x => x === "loanAmount")) loanField.current.placeholder = "Compulsory Area";
+            else loanField.current.placeholder = "";
+            if(empthyInputs.some(x => x === "numberOfInstallments")) installmentNumberField.current.placeholder = "Compulsory Area";
+            else installmentNumberField.current.placeholder = "";
+            if(empthyInputs.some(x => x === "profitRate")) profitRateField.current.placeholder = "Compulsory Area";
+            else profitRateField.current.placeholder = "";
+            if(empthyInputs.some(x => x === "bsmvTaxRate")) bsmvField.current.placeholder = "Compulsory Area";
+            else bsmvField.current.placeholder = "";
+            if(empthyInputs.some(x => x === "kkdfTaxRate")) kkdfField.current.placeholder = "Compulsory Area";
+            else kkdfField.current.placeholder = "";
+            if(empthyInputs.some(x => x === "calculationType")) typeField.current.innerText = "Please select..";
+            else typeField.current.innerText = "";
+            if(empthyInputs.some(x => x === "interval")) intervalField.current.innerText = "Please select..";
+            else intervalField.current.innerText = "";
+            if(empthyInputs.some(x => x === "profitRateInterval")) rateIntervalField.current.innerText = "Please select..";
+            else rateIntervalField.current.innerText = "";
         }
     }));
 
