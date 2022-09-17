@@ -8,7 +8,6 @@ export function validateInputs(inputs) {
             arr.push(x[0]);
         }
     })
-    console.log(arr);
     return {isValid,arr};
 }
 

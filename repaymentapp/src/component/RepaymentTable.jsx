@@ -10,9 +10,10 @@ function RepaymentTable(props) {
     const data = useContext(DataContext);
     const resultPerInstallment = (installment) => {
         if(!installment.idx) return;
+        let key = installment.idx+1;
         return (
-            <tr style={theme} className='trBody'>
-                <th scope="th">{installment.idx}</th>
+            <tr key={key} style={theme} className='trBody'>
+                <th>{installment.idx}</th>
                 <td>{installment.amount}</td>
                 <td>{installment.original}</td>
                 <td>{installment.remainingOriginal}</td>
@@ -53,7 +54,7 @@ function RepaymentTable(props) {
                     </table>
                 </div>
                 <button className='close-btn' onClick={() => props.setTrigger(false)}>Close Table</button>
-                <button className='pdf-btn' onClick={() => exportPDF(data)}>Download <i class="fa fa-file-pdf-o"></i></button>
+                <button className='pdf-btn' onClick={() => exportPDF(data)}>Download <i className="fa fa-file-pdf-o"></i></button>
             </div>
         </div>
         )
