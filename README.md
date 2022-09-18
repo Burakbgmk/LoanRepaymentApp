@@ -1,5 +1,5 @@
 # LoanRepaymentApp
-A static web application which provides a summary result of repayment and a payment schedule according to entered input parameters by user.
+A single-page web application which provides a summary result of repayment and a payment schedule according to entered input parameters by user.
 
 ## Project Summary
 - This app aims to calculate loan repayment and provide information about payment schedule divided into payment intervals according to user inputs.
