@@ -12,7 +12,7 @@ export const exportPDF = (data) => {
 
     doc.setFontSize(15);
 
-    const title = "Loan Repayment Report";
+    const title = "Loan Payment Schedule";
     const headers = [["INSTALLMENT NUMBER", "AMOUNT","ORIGINAL","REMAINING ORIGINAL","PROFIT AMOUNT","KKDF","BSMV"]];
 
     const pdfData = Object.values(data).map(ins=> [ins.idx, 

@@ -1,6 +1,7 @@
 import {ThemeContext} from "../context/ThemeContext";
 import { DataContext } from "../context/DataContext";
 import { useContext } from "react";
+import {numberWithCommas} from '../common/Formatting';
 
 function Result(props) {
     const theme = useContext(ThemeContext);
@@ -12,26 +13,23 @@ function Result(props) {
                         <tbody>
                             <tr>
                                 <td>Total Repay:</td>
-                                <td>{results.totalRepay}</td>
+                                <td>{numberWithCommas(results.totalRepay)}</td>
                             </tr>
                             <tr>
                                 <td>Installment Amount:</td>
-                                <td>{results.installmentPerInterval}</td>
+                                <td>{numberWithCommas(results.installmentPerInterval)}</td>
                             </tr>
                             <tr>
                                 <td>Total BSMV Tax:</td>
-                                <td>{results.totalBSMV}</td>
+                                <td>{numberWithCommas(results.totalBSMV)}</td>
                             </tr>
                             <tr>
                                 <td>Total KKDF Tax:</td>
-                                <td>{results.totalKKDF}</td>
+                                <td>{numberWithCommas(results.totalKKDF)}</td>
                             </tr>
                         </tbody>
                     </table>
-                    {/* <p>Total Repay: {results.totalRepay}</p> 
-                    <p>Installment Amount: {results.installmentPerInterval}</p> 
-                    <p>Total BSMV Tax: {results.totalBSMV}</p> 
-                    <p>Total KKDF Tax: {results.totalKKDF}</p>  */}
+                    
                 </div>
         )
     }

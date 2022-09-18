@@ -29,7 +29,6 @@ function UserInput(props, ref) {
             calculateButtonPressed();
         },
         warnInput: (empthyInputs) => {
-            //inputRef.current.focus();
             if(empthyInputs.some(x => x === "loanAmount")) loanField.current.placeholder = "Compulsory Area";
             else loanField.current.placeholder = "";
             if(empthyInputs.some(x => x === "numberOfInstallments")) installmentNumberField.current.placeholder = "Compulsory Area";
@@ -49,7 +48,6 @@ function UserInput(props, ref) {
         }
     }));
 
-    
 
     const calculateButtonPressed = () => {
         props.updateInputParams({
@@ -85,7 +83,8 @@ function UserInput(props, ref) {
                     id="ins-number-field"
                     type="number"
                     onChange={(e) => setNumberOfInstallments(e.target.value)}
-                    ref={installmentNumberField} />
+                    ref={installmentNumberField}
+                     />
                 </div>
                 <div className="input-row">
                     <label htmlFor="profit-rate-field">Profit Rate</label>

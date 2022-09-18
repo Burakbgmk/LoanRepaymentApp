@@ -4,6 +4,7 @@ import { DataContext } from '../context/DataContext';
 import {useContext} from 'react';
 import {exportPDF} from '../common/PdfExport';
 import "jspdf-autotable";
+import {numberWithCommas} from '../common/Formatting';
 
 function RepaymentTable(props) {
     const theme = useContext(ThemeContext);
@@ -13,13 +14,13 @@ function RepaymentTable(props) {
         let key = installment.idx+1;
         return (
             <tr key={key} style={theme} className='trBody'>
-                <th>{installment.idx}</th>
-                <td>{installment.amount}</td>
-                <td>{installment.original}</td>
-                <td>{installment.remainingOriginal}</td>
-                <td>{installment.profitAmount}</td>
-                <td>{installment.kkdf}</td>
-                <td>{installment.bsmv}</td>
+                <th>{numberWithCommas(installment.idx)}</th>
+                <td>{numberWithCommas(installment.amount)}</td>
+                <td>{numberWithCommas(installment.original)}</td>
+                <td>{numberWithCommas(installment.remainingOriginal)}</td>
+                <td>{numberWithCommas(installment.profitAmount)}</td>
+                <td>{numberWithCommas(installment.kkdf)}</td>
+                <td>{numberWithCommas(installment.bsmv)}</td>
             </tr>
         )
     }
@@ -33,7 +34,7 @@ function RepaymentTable(props) {
         <div  className="popup" >
             <div className="popup-inner" style={theme}>
                 <div className="pop-up-header">
-                    <h2>Items</h2>
+                    <h2>Loan Payment Schedule</h2>
                 </div>
                 <div className='pop-up-body'>
                     <table className="table">
