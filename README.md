@@ -26,3 +26,4 @@ A single-page web application which provides a summary result of repayment and a
 ## Imported Pdf Report
 
 ![image](https://user-images.githubusercontent.com/95534656/190895525-7f7800f5-3b8b-403c-bc1f-f1aab2d7be3d.png)
+
